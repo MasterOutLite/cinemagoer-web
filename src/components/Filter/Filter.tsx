@@ -136,7 +136,7 @@ function Filter({ageRating, genre, videoCategory, setQuery, sx}: FilterProps) {
   return (
     <Paper sx={sx} style={{maxWidth: '350px', flexGrow: 0}}>
 
-      <Title style={{textAlign: 'center'}}>
+      <Title sxTitle={{textAlign: 'center'}}>
         Фільтр
       </Title>
       <Stack p={1} mt={2} pb={3} gap={2}>
