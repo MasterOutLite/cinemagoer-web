@@ -1,4 +1,3 @@
-"use client"
 import React from 'react';
 import {Box, Paper, SxProps, Theme, Typography, useTheme} from "@mui/material";
 

@@ -1,11 +1,11 @@
 import {createTheme} from '@mui/material/styles';
-import {deepOrange} from "@mui/material/colors";
+import {deepOrange, pink} from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
     mode: 'light',
-    primary: deepOrange,
-    secondary: deepOrange,
+    primary: pink,
+    secondary: pink,
   },
   components: {
     MuiAlert: {

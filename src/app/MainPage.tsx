@@ -8,7 +8,7 @@ import VideoService from "../service/video.service";
 import {VideoCategory} from "../helper/api";
 import {Series} from "../type/series";
 import Title from "../components/Title/Title";
-import {TitleSite} from "../const/titleSite";
+import {TitlesSite} from "../const/titles-site";
 
 
 const seriesForDayOfWeek = [
@@ -31,7 +31,7 @@ export default function MainPage() {
       setMovie(movie);
       setSeries(series);
     }
-    document.title = TitleSite.main;
+    document.title = TitlesSite.main;
     get();
   }, []);
 

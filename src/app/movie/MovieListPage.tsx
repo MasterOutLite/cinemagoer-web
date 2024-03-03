@@ -3,7 +3,7 @@ import {Container} from "@mui/material";
 import {BasePath, getBaseRequest, VideoCategory} from "../../helper/api";
 import RenderVideo from "../../components/RenderVideo/RenderVideo";
 import {BaseResponse} from "../../type/base-response";
-import {TitleSite} from "../../const/titleSite";
+import {TitlesSite} from "../../const/titles-site";
 import {videoCategories} from "../../const/video-category";
 
 function MovieListPage() {
@@ -17,7 +17,7 @@ function MovieListPage() {
       const genre = await getBaseRequest(BasePath.genre);
       setGenre(genre);
     }
-    document.title = `${TitleSite.main} ${videoCategories[VideoCategory.Movie]}`;
+    document.title = `${TitlesSite.main} ${videoCategories[VideoCategory.Movie]}`;
     get();
 
   }, []);

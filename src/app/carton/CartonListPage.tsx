@@ -5,7 +5,7 @@ import VideoService from "../../service/video.service";
 import RenderVideo from "../../components/RenderVideo/RenderVideo";
 import {BaseResponse} from "../../type/base-response";
 import {VideoType} from "../../type/videoType";
-import {TitleSite} from "../../const/titleSite";
+import {TitlesSite} from "../../const/titles-site";
 import {videoCategories} from "../../const/video-category";
 
 
@@ -20,7 +20,7 @@ function CartonListPage() {
       const genre = await getBaseRequest(BasePath.genre);
       setGenre(genre);
     }
-    document.title = `${TitleSite.main} ${videoCategories[VideoCategory.Cartoon]}`;
+    document.title = `${TitlesSite.main} ${videoCategories[VideoCategory.Cartoon]}`;
     get();
   }, []);
 

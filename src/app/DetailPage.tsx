@@ -4,7 +4,7 @@ import {VideoDetail} from "../type/video-detail";
 import VideoService from "../service/video.service";
 import {CircularProgress, Container, Skeleton} from "@mui/material";
 import Video from "../components/Video/Video";
-import {TitleSite} from "../const/titleSite";
+import {TitlesSite} from "../const/titles-site";
 import {videoTypes} from "../const/video-type";
 
 function DetailPage() {
@@ -19,7 +19,7 @@ function DetailPage() {
       const videoDetail = await VideoService.getVideoDetails(id);
       setVideoDetail(videoDetail);
       const {type, name} = videoDetail.video;
-      document.title = `${TitleSite.main} ${videoTypes[type]} ${name[0]}`;
+      document.title = `${TitlesSite.main} ${videoTypes[type]} ${name[0]}`;
     }
     get();
   }, []);
