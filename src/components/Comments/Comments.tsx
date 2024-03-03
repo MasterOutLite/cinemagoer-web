@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
-import {Box, Button, Divider, Stack, TextField, Typography} from "@mui/material";
+import {Box, Button, Divider, Stack, TextField} from "@mui/material";
 import {useAuthStore} from "../../store/useAuthStore";
 import {CountData} from "../../type/count-data";
 import {CommentsType} from "../../type/commentsType";
@@ -57,7 +57,6 @@ function Comments({videoId}: CommentsProps) {
       <Button variant="contained" onClick={handleSendComment}>Опублікувати</Button>
       <Divider sx={{marginY: {xs: '16px'}}} orientation="horizontal" variant="fullWidth"/>
       <Box mt={2}>
-        <Typography variant={'h5'}>Коментарі</Typography>
         <Stack gap={1}>
           {
             comments.map(value => (

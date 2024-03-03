@@ -11,6 +11,8 @@ import VideoInfo from "../VideoInfo/VideoInfo";
 import RenderSeries from "../RenderSeries/RenderSeries";
 import Comments from "../Comments/Comments";
 import Carousel from "react-material-ui-carousel";
+import Title from "../Title/Title";
+import {BreakBlock, BreakBlock2} from "../BreakBlock";
 
 
 export interface VideoProps {
@@ -65,20 +67,28 @@ function Video({id, videoDetail}: VideoProps) {
           {
             video.videoInfo.pictures && video.videoInfo.pictures.length > 0 ?
               <Box>
-                <Typography mb={1} mt={2} variant={'h4'}>Кадри</Typography>
+                <Title sxTitle={{textAlign: 'end', marginRight: 2}}>
+                  Кадри
+                </Title>
+                {/*<Paper elevation={2}>*/}
                 <Carousel
                   fullHeightHover
                   animation={"slide"}
                   duration={800}
                 >
                   {video.videoInfo.pictures.map((value) =>
-                    <Box sx={{height: {xs: 250, sm: 400, md: 600}, maxHeight: {xs: 250, sm: 'none'}}}>
-                      <img key={value} width={'100%'} height={'100%'}
+                    <Box key={value} sx={{
+                      height: {xs: 230, sm: 500, md: 600},
+                    }}>
+                      <img height={'100%'} width={'100%'}
                            src={value}
                            alt={''}/>
-                    </Box>)}
-                </Carousel>
 
+                    </Box>
+                  )}
+                </Carousel>
+                {/*</Paper>*/}
+                <BreakBlock2/>
               </Box>
               :
               null
@@ -93,7 +103,7 @@ function Video({id, videoDetail}: VideoProps) {
               </TabList>
             </Box>
 
-            <TabPanel value="1">
+            <TabPanel sx={{padding: 1}} value="1">
               <Comments videoId={video.video.id}/>
             </TabPanel>
 

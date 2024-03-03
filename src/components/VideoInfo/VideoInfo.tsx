@@ -22,7 +22,7 @@ function VideoInfo({video, videoInfo, typeLink}: VideoInfoProps) {
         </Paper>
       </Stack>
 
-      <Typography variant={'h3'}>{video.name[0]}</Typography>
+      <Typography sx={{fontWeight: 500}}  variant={'h4'}>{video.name[0]}</Typography>
       <Typography variant={'subtitle1'}>{video.name[1]}</Typography>
 
       <Divider sx={{marginY: {xs: '8px'}}} orientation="horizontal" variant="fullWidth"/>
