@@ -4,7 +4,7 @@ import {Autocomplete, Box, Stack, TextField} from "@mui/material";
 import {BaseResponse} from "../../type/base-response";
 import {BasePath, getBaseRequest} from "../../helper/api";
 import {seasonOfYearArr} from "../../const/season-of-year";
-import {videoTypeArr} from "../../const/video-type-enum";
+import {videoTypeArr} from "../../const/video-type";
 import {videoCategoryArr} from "../../const/video-category";
 import {videoStatusArr} from "../../const/video-status";
 

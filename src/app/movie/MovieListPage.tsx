@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Container} from "@mui/material";
 import {BasePath, getBaseRequest, VideoCategory} from "../../helper/api";
-import VideoService from "../../service/video.service";
 import RenderVideo from "../../components/RenderVideo/RenderVideo";
-import {VideoType} from "../../type/videoType";
 import {BaseResponse} from "../../type/base-response";
+import {TitleSite} from "../../const/titleSite";
+import {videoCategories} from "../../const/video-category";
 
 function MovieListPage() {
   const [ageRating, setAgeRating] = useState<BaseResponse[]>([]);
@@ -17,6 +17,7 @@ function MovieListPage() {
       const genre = await getBaseRequest(BasePath.genre);
       setGenre(genre);
     }
+    document.title = `${TitleSite.main} ${videoCategories[VideoCategory.Movie]}`;
     get();
 
   }, []);

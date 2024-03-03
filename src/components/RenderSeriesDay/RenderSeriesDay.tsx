@@ -37,15 +37,6 @@ function RenderSeriesDay({series}: RenderSeriesDayProps) {
         <TabPanel key={index} index={index} value={tab}>
           <OutputOfSeries maxHeightContent={500}
                           title={value} expanded={false} series={series[index]} index={index}/>
-          {/*<Paper >*/}
-          {/*    <Stack p={1} gap={1} divider={<Divider/>} style={{maxHeight: 300, overflow: 'auto'}}>*/}
-          {/*        {*/}
-          {/*            series[index].map((value) => (*/}
-          {/*                <SmallVideo key={value.name} {...value} />*/}
-          {/*            ))*/}
-          {/*        }*/}
-          {/*    </Stack>*/}
-          {/*</Paper>*/}
         </TabPanel>))
       }
 

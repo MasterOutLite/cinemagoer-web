@@ -5,7 +5,7 @@ import {yellow} from "@mui/material/colors";
 import {VideoDetail} from "../../type/video-detail";
 import {FilterParam} from "../../type/filter-param";
 import {getDateLocal} from "../../helper";
-import {videoTypeArr, videoTypes} from "../../const/video-type-enum";
+import {videoTypeArr, videoTypes} from "../../const/video-type";
 
 export interface VideoInfoProps extends VideoDetail {
   typeLink: string;

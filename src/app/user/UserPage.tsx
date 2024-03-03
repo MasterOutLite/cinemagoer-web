@@ -1,4 +1,3 @@
-"use client";
 import React from 'react';
 import {Box, Button, Container, Stack} from "@mui/material";
 import Auth from "../../components/Auth/Auth";

@@ -5,7 +5,7 @@ import {yellow} from "@mui/material/colors";
 import styles from './PreviewVideoWithInfoCard.module.css'
 import {VideoType} from "../../type/videoType";
 import {FilterParam} from "../../type/filter-param";
-import {videoTypes} from "../../const/video-type-enum";
+import {videoTypes} from "../../const/video-type";
 
 export interface PreviewVideoWithInfoCardProps extends VideoType {
 

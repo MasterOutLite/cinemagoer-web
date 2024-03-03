@@ -1,4 +1,4 @@
-import {Box, Container, Grid, Paper} from "@mui/material";
+import {Box, Container, Grid, Paper, Skeleton} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import RenderSeriesDay from "../components/RenderSeriesDay/RenderSeriesDay";
 import {VideoType} from "../type/videoType";
@@ -8,6 +8,7 @@ import VideoService from "../service/video.service";
 import {VideoCategory} from "../helper/api";
 import {Series} from "../type/series";
 import Title from "../components/Title/Title";
+import {TitleSite} from "../const/titleSite";
 
 
 const seriesForDayOfWeek = [
@@ -16,8 +17,8 @@ const seriesForDayOfWeek = [
 
 export default function MainPage() {
 
-  const [anime, setAnime] = useState<VideoType[]>([]);
-  const [movie, setMovie] = useState<VideoType[]>([]);
+  const [anime, setAnime] = useState<VideoType[]>();
+  const [movie, setMovie] = useState<VideoType[]>();
   const [series, setSeries] = useState<[Series[]]>([[]]);
 
 
@@ -30,7 +31,7 @@ export default function MainPage() {
       setMovie(movie);
       setSeries(series);
     }
-
+    document.title = TitleSite.main;
     get();
   }, []);
 
@@ -47,9 +48,13 @@ export default function MainPage() {
           </Title>
           <Grid container spacing={2} p={1}>
             {
-              movie.map((value: VideoType) => <Grid key={value.id} item xs={12} md={6}>
-                <PreviewVideoWithInfoCard   {...value}/>
-              </Grid>)
+              movie ? movie.map((value: VideoType) => <Grid key={value.id} item xs={12} md={6}>
+                  <PreviewVideoWithInfoCard   {...value}/>
+                </Grid>) :
+                <Grid item xs={12}>
+                  <Skeleton variant="rectangular" height={300}>
+                  </Skeleton>
+                </Grid>
             }
           </Grid>
           <BreakBlock2/>
@@ -61,9 +66,13 @@ export default function MainPage() {
           </Title>
           <Grid container spacing={2} p={1}>
             {
-              anime.map((value: VideoType) => <Grid key={value.id} item xs={12} md={6}>
-                <PreviewVideoWithInfoCard  {...value}/>
-              </Grid>)
+              anime ? anime.map((value: VideoType) => <Grid key={value.id} item xs={12} md={6}>
+                  <PreviewVideoWithInfoCard  {...value}/>
+                </Grid>) :
+                <Grid item xs={12}>
+                  <Skeleton variant="rectangular" height={300}>
+                  </Skeleton>
+                </Grid>
             }
           </Grid>
         </Box>

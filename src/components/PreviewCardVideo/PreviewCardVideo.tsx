@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, Link, Paper, Skeleton, Stack, Typography} from "@mui/material";
 import {VideoType} from "../../type/videoType";
-import {videoTypes} from "../../const/video-type-enum";
+import {videoTypes} from "../../const/video-type";
 import {videoStatus} from "../../const/video-status";
 
 

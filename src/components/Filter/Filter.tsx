@@ -1,7 +1,7 @@
 import React, {SyntheticEvent, useEffect} from 'react';
 import {Autocomplete, Box, Button, Paper, Stack, SxProps, TextField, Theme} from "@mui/material";
 import queryString from 'query-string';
-import {videoTypeArr} from "../../const/video-type-enum";
+import {videoTypeArr} from "../../const/video-type";
 import {videoStatusArr} from "../../const/video-status";
 import {BaseResponse} from "../../type/base-response";
 import {VideoCategory, videoCategoryArr} from "../../const/video-category";

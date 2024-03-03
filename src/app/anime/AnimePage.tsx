@@ -5,6 +5,8 @@ import RenderVideo from "../../components/RenderVideo/RenderVideo";
 import VideoService from "../../service/video.service";
 import {BaseResponse} from "../../type/base-response";
 import {VideoType} from "../../type/videoType";
+import {TitleSite} from "../../const/titleSite";
+import {videoCategories} from "../../const/video-category";
 
 
 function AnimePage() {
@@ -18,6 +20,8 @@ function AnimePage() {
       const genre = await getBaseRequest(BasePath.genre);
       setGenre(genre);
     }
+
+    document.title = `${TitleSite.main} ${videoCategories[VideoCategory.Anime]}`;
     get();
   }, []);
 

@@ -5,8 +5,12 @@
 }
 
 html,
-body {
+body, #root {
     min-height: 100vh;
-    /*overflow-x: hidden;*/
-    padding: 0 !important;
+}
+
+main{
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
 }

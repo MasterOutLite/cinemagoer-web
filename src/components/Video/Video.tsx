@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Button, Container, Divider, Paper, Skeleton, Stack, TextField, Typography} from "@mui/material";
+import {Box, Container, Divider, Paper, Skeleton, Stack, Typography} from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import Tab from "@mui/material/Tab";
@@ -10,6 +10,7 @@ import UserListViewButton from "../UserListViewButton/UserListViewButton";
 import VideoInfo from "../VideoInfo/VideoInfo";
 import RenderSeries from "../RenderSeries/RenderSeries";
 import Comments from "../Comments/Comments";
+import Carousel from "react-material-ui-carousel";
 
 
 export interface VideoProps {
@@ -23,8 +24,6 @@ function Video({id, videoDetail}: VideoProps) {
   console.log('Video:', 'link', typeLink);
   const [video] = useState<VideoDetail>(videoDetail);
   const [value, setValue] = React.useState('1');
-
-  console.log(typeLink);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -43,7 +42,12 @@ function Video({id, videoDetail}: VideoProps) {
         <Box p={1}>
           <Stack direction={{xs: 'column', sm: 'row'}}>
             <Stack alignItems={'center'}>
-              <VideoBanner icon={video.video.icon}/>
+              {
+                video.video.icon ? <VideoBanner icon={video.video.icon}/> :
+                  <Skeleton>
+                    <VideoBanner icon={video.video.icon}/>
+                  </Skeleton>
+              }
 
               <UserListViewButton videoId={id}/>
 
@@ -61,20 +65,20 @@ function Video({id, videoDetail}: VideoProps) {
           {
             video.videoInfo.pictures && video.videoInfo.pictures.length > 0 ?
               <Box>
-                <Typography variant={'h4'}>Кадри</Typography>
-                <Stack direction={'row'} height={'150px'}
-                       gap={1} mt={2}>
-                  {video.videoInfo.pictures.map((value, index) => {
-                    if (index < 3)
-                      return (
-                        <Box key={index} width={250} height={150}>
-                          <img height={'100%'} width={'100%'}
-                               src={value}
-                               alt={''}/>
-                        </Box>
-                      )
-                  })}
-                </Stack>
+                <Typography mb={1} mt={2} variant={'h4'}>Кадри</Typography>
+                <Carousel
+                  fullHeightHover
+                  animation={"slide"}
+                  duration={800}
+                >
+                  {video.videoInfo.pictures.map((value) =>
+                    <Box sx={{height: {xs: 250, sm: 400, md: 600}, maxHeight: {xs: 250, sm: 'none'}}}>
+                      <img key={value} width={'100%'} height={'100%'}
+                           src={value}
+                           alt={''}/>
+                    </Box>)}
+                </Carousel>
+
               </Box>
               :
               null
@@ -86,7 +90,6 @@ function Video({id, videoDetail}: VideoProps) {
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
               <TabList onChange={handleChange} aria-label="lab API tabs example">
                 <Tab label="Коментарі" value="1"/>
-                <Tab label="Рецензії" value="2"/>
               </TabList>
             </Box>
 
@@ -94,16 +97,6 @@ function Video({id, videoDetail}: VideoProps) {
               <Comments videoId={video.video.id}/>
             </TabPanel>
 
-            <TabPanel value="2">
-              <TextField margin={'normal'} fullWidth multiline size={'small'}/>
-              <Button variant="contained">Опублікувати</Button>
-
-              <Box mt={2}>
-                <Divider sx={{marginY: {xs: '16px'}}} orientation="horizontal"
-                         variant="fullWidth"/>
-                <Typography variant={'h5'}>Рецензії</Typography>
-              </Box>
-            </TabPanel>
           </TabContext>
         </Box>
       </Paper>
