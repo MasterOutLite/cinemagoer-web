@@ -43,7 +43,7 @@ export default function MainPage() {
 
       <Paper elevation={3}>
         <Box>
-          <Title>
+          <Title sxTitle={{textAlign: 'center'}}>
             Фільми
           </Title>
           <Grid container spacing={2} p={1}>
@@ -61,7 +61,7 @@ export default function MainPage() {
         </Box>
 
         <Box>
-          <Title>
+          <Title sxTitle={{textAlign: 'center'}}>
             Аніме
           </Title>
           <Grid container spacing={2} p={1}>
