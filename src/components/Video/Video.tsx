@@ -67,10 +67,9 @@ function Video({id, videoDetail}: VideoProps) {
           {
             video.videoInfo.pictures && video.videoInfo.pictures.length > 0 ?
               <Box>
-                <Title sxTitle={{textAlign: 'end', marginRight: 2}}>
+                <Title sxTitle={{textAlign: 'center'}} sx={{marginBottom: 1}}>
                   Кадри
                 </Title>
-                {/*<Paper elevation={2}>*/}
                 <Carousel
                   fullHeightHover
                   animation={"slide"}
@@ -87,7 +86,6 @@ function Video({id, videoDetail}: VideoProps) {
                     </Box>
                   )}
                 </Carousel>
-                {/*</Paper>*/}
                 <BreakBlock2/>
               </Box>
               :
