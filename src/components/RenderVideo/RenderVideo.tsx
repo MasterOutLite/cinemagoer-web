@@ -3,19 +3,17 @@ import {Box, Button, Paper, Stack, SwipeableDrawer, TextField} from "@mui/materi
 import Grid2 from "@mui/material/Unstable_Grid2";
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import {BaseResponse} from "../../type/base-response";
-import VideoService, {FilterVideo} from "../../service/video.service";
-import {VideoCategory} from "../../helper/api";
 import Title from "../Title/Title";
 import Filter from "../Filter/Filter";
-import PreviewCardVideo from "../PreviewCardVideo/PreviewCardVideo";
-import {VideoType} from "../../type/videoType";
+import {VideoCategory} from 'const/video-category';
+import {VideoType} from 'type/videoType';
+import {FilterVideo} from 'service/video.service';
+import {VideoService} from 'service';
+import PreviewCardVideo from 'components/PreviewCardVideo/PreviewCardVideo';
 
 
 export interface RenderVideoProps {
   filter: {
-    ageRating: BaseResponse[];
-    genre: BaseResponse[];
     videoCategory: VideoCategory;
   };
   title: string;
@@ -51,7 +49,6 @@ function RenderVideo({filter, title}: RenderVideoProps) {
   const handleSendSearch = async () => {
     if (!search) {
       setSearchCount((v) => v + 1);
-      console.log('Search increment' + (searchCount + 1));
     } else {
       setSearchCount(() => 0);
     }
@@ -59,7 +56,6 @@ function RenderVideo({filter, title}: RenderVideoProps) {
     if (searchCount > 1)
       return;
     //add memo
-    console.log('Search send');
     let data;
     if (search.length > 0) {
       data = await VideoService.getVideoByName(search as string, filter.videoCategory);
@@ -86,17 +82,6 @@ function RenderVideo({filter, title}: RenderVideoProps) {
 
   }, [changeQuery])
 
-  // useEffect(() => {
-  //   const get = async () => {
-  //     const videoBase = await VideoService.getVideoByFilter({videoCategory: filter.videoCategory})
-  //     setVideo(videoBase.rows);
-  //   }
-  //   get();
-  // }, []);
-
-  console.log('RenderVideo:', video);
-  console.log('RenderVideo:', ' filter.videoCategory', filter.videoCategory);
-
   return (
     <Stack direction={'row'} spacing={2} alignItems={'flex-start'} justifyContent={'center'}>
 
@@ -113,7 +98,7 @@ function RenderVideo({filter, title}: RenderVideoProps) {
               <Button onClick={handleSendSearch}><SearchRoundedIcon fontSize={'large'}/></Button>
             </Stack>
           </Paper>
-          <Box sx={{display: {xs: 'black', md: 'none'}}}>
+          <Box sx={{display: {xs: 'black', lg: 'nones'}}}>
             <Button variant="contained" size={'large'}
                     onClick={toggleDrawer(true)}><FilterAltRoundedIcon/></Button>
             <SwipeableDrawer
@@ -123,8 +108,7 @@ function RenderVideo({filter, title}: RenderVideoProps) {
               onOpen={toggleDrawer(true)}
             >
               <Filter setQuery={setQuery}
-                      ageRating={filter.ageRating}
-                      genre={filter.genre} videoCategory={filter.videoCategory}/>
+                      videoCategory={filter.videoCategory}/>
             </SwipeableDrawer>
           </Box>
         </Stack>
@@ -134,11 +118,12 @@ function RenderVideo({filter, title}: RenderVideoProps) {
             {title}
           </Title>
 
-          <Grid2 container spacing={1} rowSpacing={2} py={4} justifyContent={'space-evenly'}>
+          <Grid2 container spacing={1} rowSpacing={2} py={4} justifyContent={'space-evenly'}
+          >
             {
               video.map(value => (
                 <Grid2 key={value.id}>
-                  <PreviewCardVideo  {...value}/>
+                  <PreviewCardVideo key={value.id}  {...value}/>
                 </Grid2>
               ))
             }
@@ -146,9 +131,8 @@ function RenderVideo({filter, title}: RenderVideoProps) {
         </Paper>
       </Stack>
 
-      <Filter sx={{display: {xs: 'none', md: 'block'}, minWidth: '250px', flexGrow: 1}} setQuery={setQuery}
-              ageRating={filter.ageRating}
-              genre={filter.genre} videoCategory={filter.videoCategory}/>
+      {/*<Filter sx={{display: {xs: 'none', lg: 'block'}, minWidth: '250px', flexGrow: 1}} setQuery={setQuery}*/}
+      {/*        videoCategory={filter.videoCategory}/>*/}
 
 
     </Stack>

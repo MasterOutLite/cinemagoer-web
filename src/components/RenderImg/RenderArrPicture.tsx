@@ -7,7 +7,7 @@ export interface RenderStillsFromTheFilmProps {
   children?: React.ReactNode
 }
 
-function RenderStillsFromTheFilm({srs, icon, children}: RenderStillsFromTheFilmProps) {
+function RenderArrPicture({srs, icon, children}: RenderStillsFromTheFilmProps) {
   return (
     <Box sx={{
       height: {xs: 340, sm: '100%'},
@@ -31,4 +31,4 @@ function RenderStillsFromTheFilm({srs, icon, children}: RenderStillsFromTheFilmP
   );
 }
 
-export default RenderStillsFromTheFilm;
+export default RenderArrPicture;

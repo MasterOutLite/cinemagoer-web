@@ -6,6 +6,8 @@ import {RouterProvider} from "react-router-dom";
 import Main from "./layout";
 
 import './styles/globals.css'
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import {LocalizationProvider} from "@mui/x-date-pickers";
 
 
 const root = ReactDOM.createRoot(
@@ -13,7 +15,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Main>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <RouterProvider router={router}/>
+    </LocalizationProvider>
   </Main>
 );
 

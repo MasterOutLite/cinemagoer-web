@@ -1,4 +1,3 @@
-"use client";
 import {
   AppBar,
   Box,
@@ -8,18 +7,19 @@ import {
   Drawer,
   IconButton,
   Link,
-  List,
   ListItem,
   ListItemButton,
-  ListItemText, Stack,
+  ListItemText,
+  Stack,
   Toolbar,
   Typography
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Links} from "../helper/link";
 import AvatarUser from "./UserIcon/AvatarUser";
 import {TitlesSite} from "../const/titles-site";
+import {useAuthStore} from "../store/useAuthStore";
 
 const drawerWidth = 240;
 const navItems = [
@@ -35,19 +35,22 @@ interface Props {
 function Header(props: Props) {
   const {window} = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const {user, getOut} = useAuthStore();
+
+  useEffect(() => {
+    if (user) {
+      const date = new Date(user.exp * 1000);
+      if (date < new Date()) {
+        console.log("Invalid token date", date);
+        getOut();
+      }
+    }
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
-  const [selectedIndex, setSelectedIndex] = React.useState<number>();
-
-  // const handleListItemClick = (
-  //     index: number,
-  // ) => {
-  //     setSelectedIndex(index);
-  //     router.push(navItems[index].href);
-  // };
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{textAlign: 'center'}}>
@@ -56,12 +59,10 @@ function Header(props: Props) {
       </Typography>
       <Box sx={{background: '#000'}} height={4}/>
       <Stack divider={<Divider/>}>
-        {navItems.map((item, index) => (
+        {navItems.map((item) => (
           <ListItem key={item.href} disablePadding>
             <ListItemButton style={{textAlign: 'center'}}
-                            selected={selectedIndex === index}
                             href={item.href}
-              // onClick={() => handleListItemClick(index)}
             >
               <ListItemText primary={item.title}/>
             </ListItemButton>

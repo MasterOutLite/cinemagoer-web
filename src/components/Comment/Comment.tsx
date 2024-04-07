@@ -1,4 +1,3 @@
-"use client"
 import React, {memo, useState} from 'react';
 import {Avatar, Box, IconButton, Link, Paper, Stack, Typography} from "@mui/material";
 import {Badge} from "@mui/base";
@@ -6,7 +5,7 @@ import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
 import ThumbDownRoundedIcon from "@mui/icons-material/ThumbDownRounded";
 import {useAuthStore} from "../../store/useAuthStore";
 import {CommentsType} from "../../type/commentsType";
-import {post, PostPatch} from "../../helper/api";
+import CommentService from "../../service/comment.service";
 
 function Comment({
                    id,
@@ -19,18 +18,9 @@ function Comment({
                  }: CommentsType) {
 
   console.log('Comment', user.nickname, userLike);
-  // console.log('Comment', {
-  //   id,
-  //   like,
-  //   user,
-  //   dislike,
-  //   createdAt,
-  //   userLike
-  // });
-
   const auth = useAuthStore(state => state.user);
-  const [likes, setLikes] = useState<number>(like)
-  const [dislikes, setDislikes] = useState<number>(dislike)
+  const [likes, setLikes] = useState<number>(like || 0)
+  const [dislikes, setDislikes] = useState<number>(dislike || 0)
   const [userLikes, setUserLikes] = useState<boolean>(userLike !== 'none');
   const [isLike, setIsLike] = useState<boolean>(userLike === true);
 
@@ -39,11 +29,7 @@ function Comment({
     console.log({commentId: id, rate})
     if (!auth)
       return;
-    const date = await post(PostPatch.CommentsRate, {commentId: id, rate}) as {
-      commentId: number,
-      rate: boolean,
-      state: string
-    };
+    const date = await CommentService.createRate({commentId: id, rate});
     if (date.commentId === id) {
       switch (date.state) {
         case 'update': {

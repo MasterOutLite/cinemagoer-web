@@ -4,7 +4,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
 import {grey} from '@mui/material/colors';
-import {Series} from "../../type/series";
+import { Series } from 'type';
 
 export interface RenderSeriesProps {
   series?: Series[];

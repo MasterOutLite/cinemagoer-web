@@ -1,12 +1,14 @@
-"use client";
 import React, {SyntheticEvent, useEffect} from 'react';
 import {Autocomplete, Box, Stack, TextField} from "@mui/material";
-import {BaseResponse} from "../../type/base-response";
-import {BasePath, getBaseRequest} from "../../helper/api";
-import {seasonOfYearArr} from "../../const/season-of-year";
-import {videoTypeArr} from "../../const/video-type";
-import {videoCategoryArr} from "../../const/video-category";
-import {videoStatusArr} from "../../const/video-status";
+import {useAgeRatingStore} from 'store/useAgeRatingStore';
+import {useGenreStore} from 'store/useGenreStore';
+import {seasonOfYearArr} from 'const/season-of-year';
+import {usePublisherStore} from 'store/usePublisherStore';
+import {videoTypeArr} from 'const/video-type';
+import {videoCategoryArr} from 'const/video-category';
+import {videoStatusArr} from 'const/video-status';
+import {BaseResponse} from 'type';
+import RenderPublisher from "../../RenderPublisher/RenderPublisher";
 
 
 export type SaveCategories = {
@@ -21,33 +23,45 @@ export type SaveCategories = {
 
 export interface SelectCategoriesProps {
   savaChange: (object: SaveCategories) => void,
+  init?: SaveCategories,
 }
 
-function SelectCategories({savaChange}: SelectCategoriesProps) {
-  const [ageRating, setAgeRating] = React.useState<BaseResponse[]>([]);
-  const [genre, setGenre] = React.useState<BaseResponse[]>([]);
-  const [publisher, setPublisher] = React.useState<BaseResponse[]>([]);
+function SelectCategories({savaChange, init}: SelectCategoriesProps) {
+  const {ageRating, getAgeRating} = useAgeRatingStore();
+  const {genre, getGenre} = useGenreStore();
+  const {publisher, getPublisher} = usePublisherStore();
 
-  const [seasonOfYear, setSeasonOfYear] = React.useState<any>(seasonOfYearArr[0])
-  const [typeSelect, setTypeSelect] = React.useState<any>(videoTypeArr[0]);
-  const [categorySelect, setCategorySelect] = React.useState<any>(videoCategoryArr[0]);
-  const [statusSelect, setStatusSelect] = React.useState<any>(videoStatusArr[0]);
+  const [seasonOfYear, setSeasonOfYear] =
+    React.useState<any>(init?.seasonOfYear ?
+      seasonOfYearArr.find(value => value.key == init?.seasonOfYear)
+      : seasonOfYearArr[0]);
+  const [typeSelect, setTypeSelect] =
+    React.useState<any>(init?.type ? videoTypeArr.find(value => value.key == init.type) : videoTypeArr[0]);
+  const [categorySelect, setCategorySelect] =
+    React.useState<any>(init?.videoCategory ? videoCategoryArr.find(value => value.key == init.videoCategory)
+      : videoCategoryArr[0]);
+  const [statusSelect, setStatusSelect] =
+    React.useState<any>(init?.status ? videoStatusArr.find(value => value.key == init.status) : videoStatusArr[0]);
 
-  const [publisherSelect, setPublisherSelect] = React.useState<BaseResponse>({id: 0, name: 'None'});
-  const [genreSelect, setGenreSelect] = React.useState<BaseResponse[]>([]);
-  const [ageRatingSelect, setAgeRatingSelect] = React.useState<BaseResponse>({id: 0, name: 'None'});
+  const [publisherSelect, setPublisherSelect] =
+    React.useState<BaseResponse | null>(null);
+
+  const [genreSelect, setGenreSelect] =
+    React.useState<BaseResponse[]>([]);
+  const [ageRatingSelect, setAgeRatingSelect] =
+    React.useState<BaseResponse | null>(null);
 
   useEffect(() => {
-    savaChange({
-      ageRatingId: ageRatingSelect?.id, publisherId: publisherSelect?.id,
-      type: typeSelect?.key, status: statusSelect?.key, seasonOfYear: seasonOfYear?.key,
-      videoCategory: categorySelect?.key, genreIds: genreSelect.map(value => value.id)
-    });
+    if (ageRatingSelect && publisherSelect)
+      savaChange({
+        ageRatingId: ageRatingSelect?.id, publisherId: publisherSelect?.id,
+        type: typeSelect?.key, status: statusSelect?.key, seasonOfYear: seasonOfYear?.key,
+        videoCategory: categorySelect?.key, genreIds: genreSelect.map(value => value.id)
+      });
 
   }, [seasonOfYear, genreSelect, typeSelect, categorySelect, publisherSelect, statusSelect, ageRatingSelect, savaChange]);
 
   const renderFilter = [
-    {title: 'Видавець', options: publisher, action: handleChangePublisher, value: publisherSelect},
     {title: 'Віковий рейтинг', options: ageRating, action: handleChangeAgeRating, value: ageRatingSelect},
   ];
 
@@ -83,24 +97,30 @@ function SelectCategories({savaChange}: SelectCategoriesProps) {
   }
 
   const handleChangeGenre = (event: SyntheticEvent<Element, Event>, newValue: BaseResponse[]) => {
-    console.log('Arr', newValue)
     setGenreSelect(() => newValue);
   };
 
-  async function initData() {
-    const publisher = await getBaseRequest(BasePath.publisher);
-    setPublisher(publisher);
-
-    const ageRating = await getBaseRequest(BasePath.ageRating);
-    setAgeRating(ageRating);
-
-    const genre = await getBaseRequest(BasePath.genre);
-    setGenre(genre);
-  }
-
   React.useEffect(() => {
-    initData().then();
+    getGenre();
+    getPublisher();
+    getAgeRating();
   }, [])
+
+  useEffect(() => {
+    if (!init) {
+      return;
+    }
+    const initGenre = genre.filter(value => init.genreIds.includes(value.id));
+    if (initGenre)
+      setGenreSelect(initGenre)
+    const initPublisher = publisher.find(value => value.id === init.publisherId);
+    if (initPublisher)
+      setPublisherSelect(initPublisher)
+    const initAgeRating = ageRating.find(value => value.id === init.ageRatingId);
+    if (initAgeRating)
+      setAgeRatingSelect(initAgeRating)
+
+  }, [genre, ageRating, publisher]);
   return (
     <Stack gap={2}>
       <Autocomplete
@@ -121,14 +141,16 @@ function SelectCategories({savaChange}: SelectCategoriesProps) {
         )}
       />
 
+      <RenderPublisher setValue={setPublisherSelect} init={publisher.find(value => value.id == init?.publisherId)}/>
+
       {
-        renderFilter.map((value) => (
+        renderFilter.map((value, index) => (
             <Autocomplete
               key={value.title}
-              id="checkboxes-tags-demo"
+              id={`checkboxes-${index}`}
               size={'small'}
+              value={value.value}
               options={value.options}
-              disableCloseOnSelect
               onChange={value.action}
               getOptionLabel={(option) => option.name}
               renderInput={(params) => (

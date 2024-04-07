@@ -1,6 +1,5 @@
+import {BaseResponse} from "type";
 import {create} from "zustand";
-import {BaseResponse} from "../type/base-response";
-
 
 type State = {
   type: BaseResponse[];

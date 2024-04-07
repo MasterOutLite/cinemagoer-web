@@ -3,8 +3,8 @@ import {Box, Button, Divider, Stack, TextField} from "@mui/material";
 import {useAuthStore} from "../../store/useAuthStore";
 import {CountData} from "../../type/count-data";
 import {CommentsType} from "../../type/commentsType";
-import {BasePath, getBaseRequest, post, PostPatch} from "../../helper/api";
 import Comment from '../Comment/Comment';
+import CommentService from "../../service/comment.service";
 
 export interface CommentsProps {
   videoId: number;
@@ -29,7 +29,7 @@ function Comments({videoId}: CommentsProps) {
     if (user) {
       console.log(videoId)
 
-      const commentReq = await post(PostPatch.Comments, {videoId, comment})
+      const commentReq = await CommentService.create({videoId, comment})
       console.log(commentReq);
       setComments([commentReq, ...comments])
     } else
@@ -37,14 +37,11 @@ function Comments({videoId}: CommentsProps) {
   }, [comment])
 
   useEffect(() => {
-    const get = async () => {
-      const date = await getBaseRequest(BasePath.comments,
-        `page=${page}&count=20&videoId=${videoId}`) as CountData<CommentsType>;
-      console.log(date);
+
+    CommentService.get({videoId, page}).then(date => {
       setCommentsReq(date);
       setComments([...date.rows])
-    }
-    get();
+    })
   }, []);
 
   console.log(comments);

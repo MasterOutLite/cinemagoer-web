@@ -2,9 +2,10 @@
 import React from 'react';
 import {Box, Tabs} from "@mui/material";
 import Tab from "@mui/material/Tab";
-import OutputOfSeries from "../OutputOfSeries/OutputOfSeries";
-import {Series} from "../../type/series";
-import {TabPanel} from "../TabPanel/TabPanel";
+import { Series } from 'type';
+import { TabPanel } from 'components/TabPanel/TabPanel';
+import OutputOfSeries from 'components/OutputOfSeries/OutputOfSeries';
+
 
 export interface RenderSeriesDayProps {
   series: [Series[]];
@@ -39,8 +40,6 @@ function RenderSeriesDay({series}: RenderSeriesDayProps) {
                           title={value} expanded={false} series={series[index]} index={index}/>
         </TabPanel>))
       }
-
-
     </Box>
   );
 }

@@ -1,59 +1,64 @@
 import React from 'react';
 import {Box, Tabs, Typography} from "@mui/material";
 import Tab from "@mui/material/Tab";
-import {ListView} from "../../type/list-view";
-import UserListViewTabContent from "./UserListViewTabContent";
-import {TabPanel} from "../TabPanel/TabPanel";
+import {ListView, VideoFromListView} from 'type/list-view';
+import {TabPanel} from 'components/TabPanel/TabPanel';
+import UserListViewTabContent from './UserListViewTabContent';
+
 
 export interface UserListViewProps {
-    userList: ListView[];
+  userList: ListView[];
 }
 
 function UserListView({userList}: UserListViewProps) {
-    const [tab, setTab] = React.useState(1);
 
-    const handleTab = (event: React.SyntheticEvent, newValue: number) => {
-        setTab(newValue);
-    };
+  const [tab, setTab] = React.useState(1);
 
-    function remove(indexUserList: number) {
-        return (videoId: number) => {
-            userList[indexUserList].video = userList[indexUserList].video?.filter(value => value.id !== videoId);
-        }
+  const handleTab = (event: React.SyntheticEvent, newValue: number) => {
+    setTab(newValue);
+  };
+
+  function remove(indexUserList: number) {
+    return (videoId: number, newList: VideoFromListView[]) => {
+      console.log("Remove list view", indexUserList, videoId);
+      userList[indexUserList].listView = newList;
     }
+  }
+
+  console.log(userList[0]);
 
 
-    return (
-        <Box sx={{width: '100%', typography: 'body1'}}>
+  return (
+    <Box sx={{width: '100%', typography: 'body1'}}>
 
-            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <Tabs onChange={handleTab} value={tab}>
-                    {
-                        userList.map((value, index) =>
-                            <Tab key={index} label={value.name}
-                                 tabIndex={index}/>)
-                    }
-                </Tabs>
-            </Box>
+      <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+        <Tabs onChange={handleTab} value={tab}>
+          {
+            userList.map((value, index) =>
+              <Tab key={index} label={value.name}
+                   tabIndex={index}/>)
+          }
+        </Tabs>
+      </Box>
 
+      {
+        userList.map((value, index) =>
+          <TabPanel key={index} value={tab} index={index}>
             {
-                userList.map((value, index) =>
-                    <TabPanel key={index} value={tab} index={index}>
-                        {
-                            value.video ?
-                                <UserListViewTabContent video={value.video} userListViewId={value.id}
-                                                        remove={remove(index)}/>
-                                :
-                                <Typography>
-                                    Список пустий
-                                </Typography>
-                        }
-                    </TabPanel>
-                )
+              value.listView ?
+                <UserListViewTabContent video={value.listView} userListViewId={value.id}
+                                        remove={remove(index)}/>
+                :
+                <Typography>
+                  Список пустий
+                </Typography>
             }
+          </TabPanel>
+        )
+      }
 
-        </Box>
-    );
+    </Box>
+  );
 }
 
 export default UserListView;

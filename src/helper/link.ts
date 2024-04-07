@@ -1,5 +1,3 @@
-import {BaseResponse} from "../type/base-response";
-
 export enum Links {
     main = '/',
     movie = '/movie',
@@ -8,10 +6,6 @@ export enum Links {
     anime = '/anime',
     user = '/user',
     admin = '/admin',
-}
-
-export function getTypeLink(type: BaseResponse) {
-    return getTypeLinkById(type.id)
 }
 
 export function getTypeLinkById(id: number) {

@@ -2,7 +2,7 @@ import {Accordion, AccordionDetails, AccordionSummary, Divider, Skeleton, Stack,
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React from 'react';
 import SmallVideo from "../SmallVideo/SmallVideo";
-import {Series} from "../../type/series";
+import { Series } from 'type';
 
 export interface OutputOfSeriesProps {
   index: number,

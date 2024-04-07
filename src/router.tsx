@@ -8,14 +8,14 @@ import SerialPage from "./app/serial/SerialPage";
 import CartonListPage from "./app/carton/CartonListPage";
 import AnimePage from "./app/anime/AnimePage";
 import DetailPage from "./app/DetailPage";
+import UpdateVideoPage from "./app/admin/UpdateVideoPage";
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainPage/>,
-  },
-  {
+  }, {
     path: Links.user,
     element: <UserPage/>,
   }, {
@@ -36,6 +36,9 @@ export const router = createBrowserRouter([
   }, {
     path: '/:videoCategory/:id',
     element: <DetailPage/>
+  }, {
+    path: '/:videoCategory/:id/update',
+    element: <UpdateVideoPage/>
   },
   {
     path: "*",

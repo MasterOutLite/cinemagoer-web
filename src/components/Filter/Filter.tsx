@@ -9,17 +9,20 @@ import Title from "../Title/Title";
 import {seasonOfYearArr} from "../../const/season-of-year";
 import {useLocation} from "react-router-dom";
 import {FilterVideo} from "../../service/video.service";
+import {useAgeRatingStore} from "../../store/useAgeRatingStore";
+import {useGenreStore} from "../../store/useGenreStore";
 
 export interface FilterProps {
-  ageRating: BaseResponse[];
-  genre: BaseResponse[];
   videoCategory: VideoCategory;
   setQuery: (value: FilterVideo) => void;
   sx?: SxProps<Theme>;
 }
 
-function Filter({ageRating, genre, videoCategory, setQuery, sx}: FilterProps) {
+function Filter({videoCategory, setQuery, sx}: FilterProps) {
   const location = useLocation();
+  const {ageRating, getAgeRating} = useAgeRatingStore();
+  const {genre, getGenre} = useGenreStore();
+  // const {publisher, getPublisher} = usePublisherStore();
 
   const [genreSelect, setGenreSelect] = React.useState<BaseResponse[]>([]);
   const [ageRatingSelect, setAgeRatingSelect] = React.useState<BaseResponse>();
@@ -59,10 +62,6 @@ function Filter({ageRating, genre, videoCategory, setQuery, sx}: FilterProps) {
     console.log('Arr', newValue)
     setGenreSelect(() => newValue);
   };
-
-  function getGenreById(id: number) {
-    return genre.find(value => value.id == id);
-  }
 
   function validYear(value: string) {
     const number = value.replace(/[^0-9]/g, '');
@@ -124,7 +123,6 @@ function Filter({ageRating, genre, videoCategory, setQuery, sx}: FilterProps) {
     const parse = queryString.parse(location.search) as {
       genreIds?: number,
     };
-    console.log('Filter', 'search url param:', parse);
     if (parse.genreIds) {
       setQuery({genreIds: [parse.genreIds], videoCategory});
       const genreFind = genre.find(value => value.id == parse.genreIds)
@@ -133,8 +131,13 @@ function Filter({ageRating, genre, videoCategory, setQuery, sx}: FilterProps) {
     }
   }, [genre]);
 
+  useEffect(() => {
+    getGenre();
+    getAgeRating();
+  }, []);
+
   return (
-    <Paper sx={sx} style={{maxWidth: '350px', flexGrow: 0}}>
+    <Paper sx={sx} style={{maxWidth: '350px'}} elevation={4}>
 
       <Title sxTitle={{textAlign: 'center'}}>
         Фільтр

@@ -2,10 +2,11 @@ import React from 'react';
 import {Divider, Link, Paper, Stack, Typography} from "@mui/material";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import {yellow} from "@mui/material/colors";
-import {VideoDetail} from "../../type/video-detail";
-import {FilterParam} from "../../type/filter-param";
-import {getDateLocal} from "../../helper";
-import {videoTypeArr, videoTypes} from "../../const/video-type";
+import { getDateLocal } from 'helper';
+import { videoTypes } from 'const/video-type';
+import { FilterParam } from 'type/filter-param';
+import { VideoDetail } from 'type';
+
 
 export interface VideoInfoProps extends VideoDetail {
   typeLink: string;

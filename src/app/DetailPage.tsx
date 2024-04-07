@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {VideoDetail} from "../type/video-detail";
-import VideoService from "../service/video.service";
 import {CircularProgress, Container, Skeleton} from "@mui/material";
-import Video from "../components/Video/Video";
-import {TitlesSite} from "../const/titles-site";
-import {videoTypes} from "../const/video-type";
+import {TitlesSite} from 'const/titles-site';
+import {videoTypes} from 'const/video-type';
+import VideoService from "service/video.service";
+import {VideoDetail} from 'type/video-detail';
+import Video from 'components/Video/Video';
+
 
 function DetailPage() {
   const params = useParams() as { id: string };

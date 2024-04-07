@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
-import {Box, Container, Divider, Paper, Skeleton, Stack, Typography} from "@mui/material";
+import React, {useEffect, useState} from 'react';
+import {Box, Button, Container, Divider, Paper, Skeleton, Stack, Typography} from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import Tab from "@mui/material/Tab";
 import TabPanel from "@mui/lab/TabPanel";
-import {VideoDetail} from "../../type/video-detail";
-import VideoBanner from "../RenderImg/VideoBanner";
-import UserListViewButton from "../UserListViewButton/UserListViewButton";
-import VideoInfo from "../VideoInfo/VideoInfo";
-import RenderSeries from "../RenderSeries/RenderSeries";
-import Comments from "../Comments/Comments";
 import Carousel from "react-material-ui-carousel";
-import Title from "../Title/Title";
-import {BreakBlock, BreakBlock2} from "../BreakBlock";
+import {VideoDetail} from 'type';
+import UserListViewButton from 'components/UserListViewButton/UserListViewButton';
+import VideoInfo from 'components/VideoInfo/VideoInfo';
+import VideoBanner from 'components/RenderImg/VideoBanner';
+import {BreakBlock2} from 'components/BreakBlock';
+import Comments from 'components/Comments/Comments';
+import RenderSeries from 'components/RenderSeries/RenderSeries';
+import {useAuthStore} from 'store/useAuthStore';
+import {Roles} from 'helper/roles';
+import {Links} from 'helper/link';
 
 
 export interface VideoProps {
@@ -22,14 +24,29 @@ export interface VideoProps {
 }
 
 function Video({id, videoDetail}: VideoProps) {
-  const typeLink = videoDetail.video.videoCategory; //getTypeLink(videoDetail.video.videoCategory);
+  const typeLink = videoDetail.video.videoCategory;
   console.log('Video:', 'link', typeLink);
   const [video] = useState<VideoDetail>(videoDetail);
   const [value, setValue] = React.useState('1');
 
+  const [view, setView] = useState<string>('1');
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+
+  const handleChangeView = (event: React.SyntheticEvent, newValue: string) => {
+    setView(newValue);
+  };
+
+  const {user, token, getOut} = useAuthStore();
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  useEffect(() => {
+    if (!user)
+      return;
+
+    const admin = user.roles.includes(Roles.ADMIN);
+    setIsAdmin(admin);
+  }, []);
 
   if (!videoDetail)
     return (
@@ -42,6 +59,11 @@ function Video({id, videoDetail}: VideoProps) {
     <Container>
       <Paper>
         <Box p={1}>
+          {
+            isAdmin && <Button  href={`/${typeLink}/${id}/update`} variant="outlined">
+              Admin panel
+            </Button>
+          }
           <Stack direction={{xs: 'column', sm: 'row'}}>
             <Stack alignItems={'center'}>
               {
@@ -64,33 +86,79 @@ function Video({id, videoDetail}: VideoProps) {
 
           <RenderSeries series={video.series}/>
 
-          {
-            video.videoInfo.pictures && video.videoInfo.pictures.length > 0 ?
-              <Box>
-                <Title sxTitle={{textAlign: 'center'}} sx={{marginBottom: 1}}>
-                  Кадри
-                </Title>
-                <Carousel
-                  fullHeightHover
-                  animation={"slide"}
-                  duration={800}
-                >
-                  {video.videoInfo.pictures.map((value) =>
-                    <Box key={value} sx={{
-                      height: {xs: 230, sm: 500, md: 600},
-                    }}>
-                      <img height={'100%'} width={'100%'}
-                           src={value}
-                           alt={''}/>
+          <TabContext value={view}>
+            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+              <TabList onChange={handleChangeView} aria-label="lab API tabs example">
+                <Tab label="Кадри" value="1"/>
+                <Tab label="Трейлери" value="2"/>
+              </TabList>
+            </Box>
 
-                    </Box>
-                  )}
-                </Carousel>
-                <BreakBlock2/>
-              </Box>
-              :
-              null
-          }
+            <Stack sx={{
+              height: {
+                xs: 230,
+                sm: 500,
+                md: 600
+              }
+            }}>
+              <TabPanel sx={{padding: 1}} value="1">
+                {
+                  video.videoInfo.pictures && video.videoInfo.pictures.length > 0 ?
+                    <Carousel
+                      fullHeightHover
+                      animation={"slide"}
+                      duration={800}
+                      indicators={false}
+                    >
+                      {video.videoInfo.pictures.map((value) =>
+                        <Box key={value} sx={{
+                          height: {xs: 230, sm: 500, md: 600},
+                        }}>
+                          <img height={'100%'} width={'100%'}
+                               src={value}
+                               alt={''}/>
+
+                        </Box>
+                      )}
+                    </Carousel>
+                    :
+                    null
+                }
+              </TabPanel>
+              <TabPanel sx={{padding: 1, flexGrow: 1}} value="2">
+                {
+                  video.videoInfo.trailers && video.videoInfo.trailers.length > 0 ?
+                    <Carousel
+                      fullHeightHover
+                      animation={"slide"}
+                      duration={800}
+                      navButtonsAlwaysVisible={false}
+                      autoPlay={false}
+                    >
+                      {video.videoInfo.trailers.map((value) =>
+                        <Box key={value} sx={{
+                          height: {xs: 230, sm: 500, md: 600},
+                        }}>
+                          <iframe width="100%" height="100%"
+                                  src={value}
+                                  title="YouTube video player" frameBorder="0"
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                  referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+
+                        </Box>
+                      )}
+                    </Carousel>
+                    :
+                    <Typography variant='h3' textAlign='center'>
+                      Список трейлерів пустий
+                    </Typography>
+
+                }
+              </TabPanel>
+            </Stack>
+
+          </TabContext>
+          <BreakBlock2/>
         </Box>
 
         <Box sx={{width: '100%', typography: 'body1'}}>

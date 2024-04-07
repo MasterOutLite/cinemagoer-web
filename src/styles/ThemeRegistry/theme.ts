@@ -1,5 +1,5 @@
 import {createTheme} from '@mui/material/styles';
-import {deepOrange, pink} from "@mui/material/colors";
+import {pink} from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
@@ -10,7 +10,7 @@ const theme = createTheme({
   components: {
     MuiAlert: {
       styleOverrides: {
-        root: ({ ownerState }) => ({
+        root: ({ownerState}) => ({
           ...(ownerState.severity === 'info' && {
             backgroundColor: '#60a5fa',
           }),

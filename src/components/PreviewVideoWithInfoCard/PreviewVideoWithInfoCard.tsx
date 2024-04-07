@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link, Paper, Skeleton, Stack, Typography} from "@mui/material";
+import {Box, Link, Paper, Skeleton, Stack, Typography} from "@mui/material";
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import {yellow} from "@mui/material/colors";
-import styles from './PreviewVideoWithInfoCard.module.css'
-import {VideoType} from "../../type/videoType";
-import {FilterParam} from "../../type/filter-param";
-import {videoTypes} from "../../const/video-type";
+import {VideoType} from 'type';
+import {videoTypes} from 'const/video-type';
+import {FilterParam} from 'type/filter-param';
+
 
 export interface PreviewVideoWithInfoCardProps extends VideoType {
 
@@ -27,8 +27,12 @@ function PreviewVideoWithInfoCard({
       <Stack flexDirection={'row'} gap={1}>
 
         {icon ?
-          <img className={styles.image} width={184} height={260} src={icon}
-               alt={'Icon'}/>
+          <Link href={`/${videoCategory}/${id}`} underline={'none'} color="inherit">
+            <Box sx={{width: {xs: 150, sm: 184}, height: {xs: 220, sm: 260}}}>
+              <img width='100%' height='100%' src={icon}
+                   alt={'Icon'}/>
+            </Box>
+          </Link>
           :
           <Skeleton variant="rectangular"
                     sx={{width: {xs: '150px', sm: '184px',}, height: {xs: '220px', sm: '260px'}}}/>
