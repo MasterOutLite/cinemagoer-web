@@ -5,6 +5,7 @@ import {yellow} from "@mui/material/colors";
 import {VideoType} from 'type';
 import {videoTypes} from 'const/video-type';
 import {FilterParam} from 'type/filter-param';
+import RenderImg from "../RenderImg/RenderImg";
 
 
 export interface PreviewVideoWithInfoCardProps extends VideoType {
@@ -25,19 +26,9 @@ function PreviewVideoWithInfoCard({
   return (
     <Paper style={{padding: '4px', background: '#e6d2be1a'}}>
       <Stack flexDirection={'row'} gap={1}>
-
-        {icon ?
-          <Link href={`/${videoCategory}/${id}`} underline={'none'} color="inherit">
-            <Box sx={{width: {xs: 150, sm: 184}, height: {xs: 220, sm: 260}}}>
-              <img width='100%' height='100%' src={icon}
-                   alt={'Icon'}/>
-            </Box>
-          </Link>
-          :
-          <Skeleton variant="rectangular"
-                    sx={{width: {xs: '150px', sm: '184px',}, height: {xs: '220px', sm: '260px'}}}/>
-        }
-
+        <Link href={`/${videoCategory}/${id}`} underline={'none'} color="inherit">
+          <RenderImg sx={{width: {xs: 150, sm: 184}, height: {xs: 220, sm: 260}}} srs={icon}/>
+        </Link>
         <Stack>
           <Link href={`/${videoCategory}/${id}`} underline={'none'} color="inherit">
             <Typography variant={'h6'} component={'h2'}>

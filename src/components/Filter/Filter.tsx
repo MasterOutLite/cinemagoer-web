@@ -125,7 +125,8 @@ function Filter({videoCategory, setQuery, sx}: FilterProps) {
     };
     if (parse.genreIds) {
       setQuery({genreIds: [parse.genreIds], videoCategory});
-      const genreFind = genre.find(value => value.id == parse.genreIds)
+      const genreFind = genre.find(value => value.id == parse.genreIds);
+      console.log(genreFind);
       if (genreFind)
         setGenreSelect(() => [genreFind]);
     }

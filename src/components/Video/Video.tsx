@@ -14,7 +14,8 @@ import Comments from 'components/Comments/Comments';
 import RenderSeries from 'components/RenderSeries/RenderSeries';
 import {useAuthStore} from 'store/useAuthStore';
 import {Roles} from 'helper/roles';
-import {Links} from 'helper/link';
+import RenderImg from "../RenderImg/RenderImg";
+import {videoCategories} from "../../const/video-category";
 
 
 export interface VideoProps {
@@ -60,7 +61,7 @@ function Video({id, videoDetail}: VideoProps) {
       <Paper>
         <Box p={1}>
           {
-            isAdmin && <Button  href={`/${typeLink}/${id}/update`} variant="outlined">
+            isAdmin && <Button href={`/${typeLink}/${id}/update`} variant="outlined">
               Admin panel
             </Button>
           }
@@ -95,11 +96,11 @@ function Video({id, videoDetail}: VideoProps) {
             </Box>
 
             <Stack sx={{
-              height: {
+              maxHeight: {
                 xs: 230,
                 sm: 500,
                 md: 600
-              }
+              }, minHeight: 80
             }}>
               <TabPanel sx={{padding: 1}} value="1">
                 {
@@ -110,19 +111,18 @@ function Video({id, videoDetail}: VideoProps) {
                       duration={800}
                       indicators={false}
                     >
-                      {video.videoInfo.pictures.map((value) =>
-                        <Box key={value} sx={{
+                      {video.videoInfo.pictures.map((value, index) =>
+                        <RenderImg sx={{
                           height: {xs: 230, sm: 500, md: 600},
-                        }}>
-                          <img height={'100%'} width={'100%'}
-                               src={value}
-                               alt={''}/>
-
-                        </Box>
+                        }} srs={value}
+                                   alt={`Трейлер до ${videoCategories[video.video.videoCategory]} ${video.video.name[0]} ${index + 1}`}
+                        />
                       )}
                     </Carousel>
                     :
-                    null
+                    <Typography variant='h3' textAlign='center'>
+                      Інформація відсутня
+                    </Typography>
                 }
               </TabPanel>
               <TabPanel sx={{padding: 1, flexGrow: 1}} value="2">
@@ -150,7 +150,7 @@ function Video({id, videoDetail}: VideoProps) {
                     </Carousel>
                     :
                     <Typography variant='h3' textAlign='center'>
-                      Список трейлерів пустий
+                      Інформація відсутня
                     </Typography>
 
                 }

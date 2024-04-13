@@ -2,8 +2,8 @@
 import React from 'react';
 import {Box, Tabs} from "@mui/material";
 import Tab from "@mui/material/Tab";
-import { Series } from 'type';
-import { TabPanel } from 'components/TabPanel/TabPanel';
+import {Series} from 'type';
+import {TabPanel} from 'components/TabPanel/TabPanel';
 import OutputOfSeries from 'components/OutputOfSeries/OutputOfSeries';
 
 
@@ -16,8 +16,9 @@ const seriesForDayOfWeek = [
 ]
 
 function RenderSeriesDay({series}: RenderSeriesDayProps) {
-
-  const [tab, setTab] = React.useState(1);
+  const day = new Date().getDay();
+  const dayOfWeek = day == 0 ? 6 : day - 1;
+  const [tab, setTab] = React.useState(dayOfWeek);
 
   const handleTab = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);

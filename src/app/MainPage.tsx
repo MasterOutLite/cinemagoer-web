@@ -1,4 +1,4 @@
-import {Box, Container, Grid, Paper, Skeleton} from "@mui/material";
+import {Box, CircularProgress, Container, Grid, Paper, Skeleton, Stack} from "@mui/material";
 import {TitlesSite} from "const/titles-site";
 import React, {useEffect, useState} from "react";
 import {Series} from "type/series";
@@ -50,8 +50,9 @@ export default function MainPage() {
                   <PreviewVideoWithInfoCard   {...value}/>
                 </Grid>) :
                 <Grid item xs={12}>
-                  <Skeleton variant="rectangular" height={300}>
-                  </Skeleton>
+                  <Stack direction='row' height={300} alignItems='center' justifyContent='center'>
+                    <CircularProgress/>
+                  </Stack>
                 </Grid>
             }
           </Grid>
@@ -68,8 +69,9 @@ export default function MainPage() {
                   <PreviewVideoWithInfoCard  {...value}/>
                 </Grid>) :
                 <Grid item xs={12}>
-                  <Skeleton variant="rectangular" height={300}>
-                  </Skeleton>
+                  <Stack direction='row' height={300} alignItems='center' justifyContent='center'>
+                    <CircularProgress/>
+                  </Stack>
                 </Grid>
             }
           </Grid>

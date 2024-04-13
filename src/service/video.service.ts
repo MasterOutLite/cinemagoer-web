@@ -42,11 +42,11 @@ class VideoService {
     console.log('VideoService', 'getVideoByFilter:', queryObg)
     const query = queryString.stringify(queryObg, {arrayFormat: 'comma', skipNull: true, skipEmptyString: true})
     const url = `/video/filter?${query}`;
-    return await ApiService.get(url,) as {
+    return await ApiService.get(url) as {
       rows: VideoType[],
       page: number,
       count: number
-    }
+    } || {rows: [], count: 0, page: 0}
   }
 
   async getVideoByName(name: string, videoCategory: VideoCategory, page: number = 0, limit: number = 20) {
@@ -65,7 +65,7 @@ class VideoService {
 
   async getVideoByDayOfWeek() {
     const url = `/video-series/seriesOfDay`;
-    return await ApiService.get(url) as [Series[]];
+    return await ApiService.get(url) as [Series[]] || [];
   }
 
   async updateVideo(form: FormData, id: number) {

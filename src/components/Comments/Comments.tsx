@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
-import {Box, Button, Divider, Stack, TextField} from "@mui/material";
+import {Box, Button, CircularProgress, Divider, Stack, TextField} from "@mui/material";
 import {useAuthStore} from "../../store/useAuthStore";
 import {CountData} from "../../type/count-data";
 import {CommentsType} from "../../type/commentsType";
@@ -12,7 +12,7 @@ export interface CommentsProps {
 
 function Comments({videoId}: CommentsProps) {
   const {user} = useAuthStore();
-  const [commentsReq, setCommentsReq] = useState<CountData<CommentsType>>({count: 0, rows: []});
+  const [commentsReq, setCommentsReq] = useState<CountData<CommentsType>>();
   const [comments, setComments] = useState<CommentsType[]>([]);
   const [page, setPage] = useState<number>(0)
 
@@ -55,6 +55,8 @@ function Comments({videoId}: CommentsProps) {
       <Divider sx={{marginY: {xs: '16px'}}} orientation="horizontal" variant="fullWidth"/>
       <Box mt={2}>
         <Stack gap={1}>
+          {!commentsReq && <CircularProgress sx={{marginX: 'auto'}} size={40}/>}
+
           {
             comments.map(value => (
               <Comment key={value.id} {...value} />

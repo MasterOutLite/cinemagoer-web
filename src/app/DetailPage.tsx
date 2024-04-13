@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {CircularProgress, Container, Skeleton} from "@mui/material";
+import {CircularProgress, Container, Skeleton, Stack} from "@mui/material";
 import {TitlesSite} from 'const/titles-site';
 import {videoTypes} from 'const/video-type';
 import VideoService from "service/video.service";
@@ -27,11 +27,8 @@ function DetailPage() {
 
   if (!videoDetail)
     return (
-      <Container sx={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
-        <CircularProgress sx={{margin: '0 auto'}}/>
-        <Skeleton sx={{flexGrow: 1}} variant="rectangular" width={'100%'}>
-          <div></div>
-        </Skeleton>
+      <Container sx={{flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <CircularProgress size={80}/>
       </Container>
     )
 

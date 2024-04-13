@@ -1,8 +1,9 @@
-import React from 'react';
-import {Box, Link, Paper, Skeleton, Stack, Typography} from "@mui/material";
-import { VideoType } from 'type';
-import { videoStatus } from 'const/video-status';
-import { videoTypes } from 'const/video-type';
+import React, {memo} from 'react';
+import {Link, Paper, Stack, Typography} from "@mui/material";
+import {VideoType} from 'type';
+import {videoStatus} from 'const/video-status';
+import {videoTypes} from 'const/video-type';
+import RenderImg from "../RenderImg/RenderImg";
 
 
 export interface BigVideoProps extends VideoType {
@@ -17,15 +18,7 @@ function PreviewCardVideo({id, name, type, ageRating, rate, icon, dateRelease, s
       <Link href={`/${videoCategory}/${id}`} underline={'none'} color="inherit" sx={{height: '100%'}}>
         <Stack sx={{height: '100%'}}>
 
-          <Box sx={{height: 260}} mb={1}>
-            {icon ?
-              <img src={icon}
-                   style={{width: '100%', height: '100%'}}
-                   alt={'Icon'}/>
-              :
-              <Skeleton variant="rectangular" height={'100%'}/>
-            }
-          </Box>
+          <RenderImg sx={{height: 260}} srs={icon}/>
 
           <Typography textAlign={'center'} variant={'h6'} justifyItems={'center'}>
             {name[0]}
@@ -42,4 +35,4 @@ function PreviewCardVideo({id, name, type, ageRating, rate, icon, dateRelease, s
   );
 }
 
-export default PreviewCardVideo;
+export default memo(PreviewCardVideo);
