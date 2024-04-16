@@ -26,7 +26,7 @@ function RenderSeriesDay({series}: RenderSeriesDayProps) {
   return (
     <Box>
       <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-        <Tabs onChange={handleTab} value={tab}>
+        <Tabs onChange={handleTab} value={tab} variant="scrollable">
           {
             seriesForDayOfWeek.map((value, index) =>
               <Tab key={index} label={value}
