@@ -3,11 +3,11 @@ import {Box, Skeleton, Stack} from "@mui/material";
 
 export interface VideoBannerProps {
   icon?: string,
-  srs?: string;
+  srс?: string;
   children?: React.ReactNode
 }
 
-function VideoBanner({icon, children, srs}: VideoBannerProps) {
+function VideoBanner({icon, children, srс}: VideoBannerProps) {
 
   return (
     <Box sx={{
@@ -15,8 +15,8 @@ function VideoBanner({icon, children, srs}: VideoBannerProps) {
       width: {xs: '100%', sm: '250px'},
       maxWidth: '340px', maxHeight: '500px',
     }} p={1}>
-      {icon || srs ?
-        <img src={srs ? srs : icon}
+      {icon || srс ?
+        <img src={srс ? srс : icon}
              style={{width: '100%', height: '100%'}}
              alt={'Icon'}/> :
         children ?
@@ -25,7 +25,7 @@ function VideoBanner({icon, children, srs}: VideoBannerProps) {
             {children}
           </Stack>
           :
-          <Skeleton variant="rectangular" height={'100%'} width={'100%'}/>
+          <Skeleton variant="rectangular" height={'100%'} data-testid="video-banner-skeleton" width={'100%'}/>
       }
     </Box>
   );

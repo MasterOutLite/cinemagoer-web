@@ -27,7 +27,7 @@ function PreviewVideoWithInfoCard({
     <Paper style={{padding: '4px', background: '#e6d2be1a'}}>
       <Stack flexDirection={'row'} gap={1}>
         <Link href={`/${videoCategory}/${id}`} underline={'none'} color="inherit">
-          <RenderImg sx={{width: {xs: 150, sm: 184}, height: {xs: 220, sm: 260}}} srs={icon}/>
+          <RenderImg sx={{width: {xs: 150, sm: 184}, height: {xs: 220, sm: 260}}} src={icon}/>
         </Link>
         <Stack>
           <Link href={`/${videoCategory}/${id}`} underline={'none'} color="inherit">

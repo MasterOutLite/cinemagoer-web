@@ -25,6 +25,8 @@ export interface VideoProps {
 }
 
 function Video({id, videoDetail}: VideoProps) {
+  console.log("Video", JSON.stringify(videoDetail), "id", id)
+
   const typeLink = videoDetail.video.videoCategory;
   console.log('Video:', 'link', typeLink);
   const [video] = useState<VideoDetail>(videoDetail);
@@ -114,7 +116,7 @@ function Video({id, videoDetail}: VideoProps) {
                       {video.videoInfo.pictures.map((value, index) =>
                         <RenderImg sx={{
                           height: {xs: 230, sm: 500, md: 600},
-                        }} srs={value}
+                        }} src={value}
                                    alt={`Трейлер до ${videoCategories[video.video.videoCategory]} ${video.video.name[0]} ${index + 1}`}
                         />
                       )}

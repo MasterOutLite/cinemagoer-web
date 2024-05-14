@@ -3,16 +3,16 @@ import {Box, CircularProgress, Stack, SxProps, Theme} from "@mui/material";
 
 export interface RenderImgProps {
   sx?: SxProps<Theme>,
-  srs?: string;
+  src?: string;
   alt?: string;
   children?: React.ReactNode
 }
 
-function RenderImg({sx, srs, children, alt}: RenderImgProps) {
+function RenderImg({sx, src, children, alt}: RenderImgProps) {
   return (
     <Box sx={sx} p={1}>
-      {srs ?
-        <img src={srs}
+      {src ?
+        <img src={src}
              style={{width: '100%', height: '100%'}}
              alt={alt || 'None'}/> :
         children ?

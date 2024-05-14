@@ -18,7 +18,7 @@ function PreviewCardVideo({id, name, type, ageRating, rate, icon, dateRelease, s
       <Link href={`/${videoCategory}/${id}`} underline={'none'} color="inherit" sx={{height: '100%'}}>
         <Stack sx={{height: '100%'}}>
 
-          <RenderImg sx={{height: 260}} srs={icon}/>
+          <RenderImg sx={{height: 260}} src={icon}/>
 
           <Typography textAlign={'center'} variant={'h6'} justifyItems={'center'}>
             {name[0]}

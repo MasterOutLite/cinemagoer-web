@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {VideoService} from 'service';
 import {Series, VideoDetail, VideoInfoType, VideoType} from 'type';
-import {Button, Paper, Stack, TextField, Typography} from "@mui/material";
+import {Button, Container, Paper, Stack, TextField, Typography} from "@mui/material";
 import LoadPicture from "../../components/UploadFile/LoadPicture";
 import {DatePicker} from "@mui/x-date-pickers";
 import dayjs from "dayjs";
@@ -119,44 +119,45 @@ function UpdateVideoPage() {
     return null;
 
   return (
-    <Stack spacing={2}>
-      <Button onClick={updateVideo}>Update</Button>
-      <Stack sx={{flexDirection: {xs: 'column', md: 'row'}}}>
-        <LoadPicture setLoadFile={setIcon}/>
-        <Stack spacing={2} flexGrow={1}>
-          <EditFieldsArrState minFields={1} init={names} setValue={setNames} label={'Назви'}/>
-          <SelectCategories
-            init={categories}
-            savaChange={setCategories}/>
-          <DatePicker value={dayjs(dateRelease)}
-                      onChange={handleChangeDateRelease}
-          />
-          <TextField onChange={event => setDuration(event.target.value)}
-                     value={duration}
-                     fullWidth size={'small'} id="duration"
-                     label="Тривалість" variant="outlined"/>
-          <TextField onChange={event => setCount(parseInt(event.target.value))}
-                     value={count}
-                     fullWidth type='number' size={'small'} id="duration" label="Кількість серій" variant="outlined"/>
+    <Container>
+      <Stack spacing={2}>
+        <Button onClick={updateVideo}>Update</Button>
+        <Stack sx={{flexDirection: {xs: 'column', md: 'row'}}}>
+          <LoadPicture setLoadFile={setIcon}/>
+          <Stack spacing={2} flexGrow={1}>
+            <EditFieldsArrState minFields={1} init={names} setValue={setNames} label={'Назви'}/>
+            <SelectCategories
+              init={categories}
+              savaChange={setCategories}/>
+            <DatePicker value={dayjs(dateRelease)}
+                        onChange={handleChangeDateRelease}
+            />
+            <TextField onChange={event => setDuration(event.target.value)}
+                       value={duration}
+                       fullWidth size={'small'} id="duration"
+                       label="Тривалість" variant="outlined"/>
+            <TextField onChange={event => setCount(parseInt(event.target.value))}
+                       value={count}
+                       fullWidth type='number' size={'small'} id="duration" label="Кількість серій" variant="outlined"/>
 
-          <EditFieldsArrState minFields={1} init={mainCharacter} setValue={setMainCharacter} label={'Головні герої'}/>
+            <EditFieldsArrState minFields={1} init={mainCharacter} setValue={setMainCharacter} label={'Головні герої'}/>
+          </Stack>
         </Stack>
+
+        <TextField rows={12} margin='normal'
+                   value={description}
+                   onChange={event => setDescription(event.target.value)}
+                   multiline size={'small'} id="description" label="Опис відео" variant="outlined"/>
+        <UpdateVideoSeriesList init={series}/>
+        <Paper elevation={4}>
+          <Stack direction='column' p={1} spacing={1}>
+            <Typography variant='h6'>Трейлери</Typography>
+            <EditFieldsArrState minFields={0} setValue={setTrailers} label={'Трейлери'}/>
+          </Stack>
+        </Paper>
+
       </Stack>
-
-      <TextField rows={12} margin='normal'
-                 value={description}
-                 onChange={event => setDescription(event.target.value)}
-                 multiline size={'small'} id="description" label="Опис відео" variant="outlined"/>
-      <UpdateVideoSeriesList init={series}/>
-      <Paper elevation={4}>
-        <Stack direction='column' p={1} spacing={1}>
-          <Typography variant='h6'>Трейлери</Typography>
-          <EditFieldsArrState minFields={0} setValue={setTrailers} label={'Трейлери'}/>
-        </Stack>
-      </Paper>
-
-
-    </Stack>
+    </Container>
   );
 }
 
